@@ -1,0 +1,6 @@
+{
+    "local_ip": "192.168.0.3",
+    "local_port": 8080,
+    "local_name": "srv",
+    "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/server.js"
+}
