@@ -1,4 +1,5 @@
 #!/bin/sh
+curl -o conf.json metadata_server/$intance_id
 
 LOCAL_NAME=`cat conf.json | jq '.local_name'`
 LOCAL_PORT=`cat conf.json | jq -r '.local_port'`
