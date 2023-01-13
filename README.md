@@ -47,3 +47,14 @@ Hypotèse sur l'infrastuture IT
   * Il inclut un contrôleur SDN interagissant avec les switch SDN via Open Flow
 
 ![](./report/asset/IT_vision.png)
+
+### Plateforme et outils mis à disposition 
+
+* Plateforme d’émulation de réseau : [ContainerNet](https://github.com/containernet/containernet)
+* Controlleur SDN : [RYU](https://ryu-sdn.org)
+* MANO standardisé ETSI NFV : [OSM](https://osm.etsi.org)
+* Middleware IoT/M2M en NodeJS (see [Middelware](https://github.com/TheoFontana/SDCI/tree/main/middleware))
+
+### Travail demandé
+
+Mettre en place l'adaptation requise lorsque la gateway intermediaire est saturée, suivant le cadre de l’Autonomic Computing
