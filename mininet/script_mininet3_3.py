@@ -86,6 +86,7 @@ def create_topology():
         dimage = 'theofontana/gateway:2.0',
         environment ={"INSTANCE_ID":gwi_conf['local_name']}
     )
+    
     info('*** Creating finals gateways ***\n')
     gwfs=[]
     for i in range (1,4):
@@ -101,7 +102,7 @@ def create_topology():
 
     info('*** Creating devices ***\n')
     devices=[]
-    for i in range (1,10):
+    for i in range (1,7):
         dev_r = requests.get(url = metadata_srv_URL+'dev_'+str(i))
         dev_conf = dev_r.json()
         dev = net.addDocker(
@@ -122,13 +123,10 @@ def create_topology():
         net.addLink(s3, gwf)
 
     for dev in devices[0:3]:
-        net.addLink(gwfs[0], dev)
+        net.addLink(s3, dev)
         
     for dev in devices[3:6]:
-        net.addLink(gwfs[1], dev)
-
-    for dev in devices[6:9]:
-        net.addLink(gwfs[2], dev)
+        net.addLink(s3, dev)
 
     net.addLink(s1, gwi)
     net.addLink(s1, server)
