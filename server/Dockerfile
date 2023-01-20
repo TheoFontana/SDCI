@@ -1,21 +1,21 @@
 # syntax=docker/dockerfile:1
 
-FROM node:18-alpine
+FROM ubuntu:trusty
 
-RUN mkdir /server
-WORKDIR /server
+ARG SCRIPT_NAME
+ENV INSTANCE_ID=''
 
-ADD start.sh /server
+RUN mkdir /componnent
+WORKDIR /componnent
 
-RUN apk update \
-    && apk add curl \
-    && apk add jq \
+ADD $SCRIPT_NAME.sh /componnent
+
+RUN apt-get update -y \
+    && apt-get insatalll curl -y\
+    && apt-get insatalll jq -y\
     && npm install express \
     && npm install systeminformation \
-    && npm install yargs
+    && npm install yargs\
+    && npm install request
 
-RUN curl -o conf.json metadata_server/server
-
-ENTRYPOINT sh /server/start.sh && /bin/sh
-
-EXPOSE 8080
+ENTRYPOINT sh /componnent/$SCRIPT_NAME.sh && /bin/sh

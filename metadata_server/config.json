@@ -135,8 +135,7 @@
         "remote_ip": "192.168.0.21",
         "remote_port": 9001,
         "remote_name": "dev-1",
-        "send_period": 50003000,
+        "send_period": 5000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/application.js"
-
     }
 }
