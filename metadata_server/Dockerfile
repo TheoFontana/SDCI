@@ -4,6 +4,7 @@ RUN mkdir /metadata_server
 WORKDIR /metadata_server
 ADD metadata_server.js /metadata_server
 ADD config.json /metadata_server
+RUN npm install request
 RUN npm install express
 CMD ["node","metadata_server.js"]
-EXPOSE 8080
+EXPOSE 1234

@@ -1,140 +1,140 @@
 {
     "srv": {
-        "local_ip": "192.168.0.3",
+        "local_ip": "10.1.0.1",
         "local_port": 8080,
         "local_name": "srv",
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/server.js"
     },
     "gwi": {
-        "local_ip": "192.168.0.10",
+        "local_ip": "10.1.0.10",
         "local_port": 8181,
         "local_name": "gwi",
-        "remote_ip": "192.168.0.3",
+        "remote_ip": "10.1.0.1",
         "remote_port": 8080,
         "remote_name": "srv",
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/gateway.js"
     },
-    "gwf-1": {
-        "local_ip": "192.168.1.11",
+    "gwf_1": {
+        "local_ip": "10.1.0.11",
         "local_port": 8282,
-        "local_name": "gwf-1",
-        "remote_ip": "192.168.0.10",
+        "local_name": "gwf_1",
+        "remote_ip": "10.1.0.10",
         "remote_port": 8181,
         "remote_name": "gwi",
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/gateway.js"
     },
-    "gwf-2": {
-        "local_ip": "192.168.0.12",
+    "gwf_2": {
+        "local_ip": "10.1.0.12",
         "local_port": 8282,
-        "local_name": "gwf-2",
-        "remote_ip": "192.168.0.10",
+        "local_name": "gwf_2",
+        "remote_ip": "10.1.0.10",
         "remote_port": 8181,
         "remote_name": "gwi",
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/gateway.js"
     },
-    "gwf-3": {
-        "local_ip": "192.168.0.13",
+    "gwf_3": {
+        "local_ip": "10.1.0.13",
         "local_port": 8282,
-        "local_name": "gwf-3",
-        "remote_ip": "192.168.0.10",
+        "local_name": "gwf_3",
+        "remote_ip": "10.1.0.10",
         "remote_port": 8181,
         "remote_name": "gwi",
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/gateway.js"
     },
-    "dev-1":{
-        "local_ip": "192.168.0.21",
+    "dev_1":{
+        "local_ip": "10.1.0.21",
         "local_port": 9001,
-        "local_name": "dev-1",
-        "remote_ip": "192.168.0.11",
+        "local_name": "dev_1",
+        "remote_ip": "10.1.0.11",
         "remote_port": 8282,
-        "remote_name": "gwf-1",
+        "remote_name": "gwf_1",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-2":{
-        "local_ip": "192.168.0.22",
+    "dev_2":{
+        "local_ip": "10.1.0.22",
         "local_port": 9001,
-        "local_name": "dev-2",
-        "remote_ip": "192.168.0.11",
+        "local_name": "dev_2",
+        "remote_ip": "10.1.0.11",
         "remote_port": 8282,
-        "remote_name": "gwf-1",
+        "remote_name": "gwf_1",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-3":{
-        "local_ip": "192.168.0.23",
+    "dev_3":{
+        "local_ip": "10.1.0.23",
         "local_port": 9001,
-        "local_name": "dev-3",
-        "remote_ip": "192.168.0.11",
+        "local_name": "dev_3",
+        "remote_ip": "10.1.0.11",
         "remote_port": 8282,
-        "remote_name": "gwf-1",
+        "remote_name": "gwf_1",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-4":{
-        "local_ip": "192.168.0.24",
+    "dev_4":{
+        "local_ip": "10.1.0.24",
         "local_port": 9001,
-        "local_name": "dev-3",
-        "remote_ip": "192.168.0.12",
+        "local_name": "dev_4",
+        "remote_ip": "10.1.0.12",
         "remote_port": 8282,
-        "remote_name": "gwf-2",
+        "remote_name": "gwf_2",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-5":{
-        "local_ip": "192.168.0.25",
+    "dev_5":{
+        "local_ip": "10.1.0.25",
         "local_port": 9001,
-        "local_name": "dev-3",
-        "remote_ip": "192.168.0.12",
+        "local_name": "dev_5",
+        "remote_ip": "10.1.0.12",
         "remote_port": 8282,
-        "remote_name": "gwf-2",
+        "remote_name": "gwf_2",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-6":{
-        "local_ip": "192.168.0.26",
+    "dev_6":{
+        "local_ip": "10.1.0.26",
         "local_port": 9001,
-        "local_name": "dev-6",
-        "remote_ip": "192.168.0.12",
+        "local_name": "dev_6",
+        "remote_ip": "10.1.0.12",
         "remote_port": 8282,
-        "remote_name": "gwf-2",
+        "remote_name": "gwf_2",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-7":{
-        "local_ip": "192.168.0.27",
+    "dev_7":{
+        "local_ip": "10.1.0.27",
         "local_port": 9001,
-        "local_name": "dev-7",
-        "remote_ip": "192.168.0.13",
+        "local_name": "dev_7",
+        "remote_ip": "10.1.0.13",
         "remote_port": 8282,
-        "remote_name": "gwf-3",
+        "remote_name": "gwf_3",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-8":{
-        "local_ip": "192.168.0.28",
+    "dev_8":{
+        "local_ip": "10.1.0.28",
         "local_port": 9001,
-        "local_name": "dev-8",
-        "remote_ip": "192.168.0.13",
+        "local_name": "dev_8",
+        "remote_ip": "10.1.0.13",
         "remote_port": 8282,
-        "remote_name": "gwf-3",
+        "remote_name": "gwf_3",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "dev-9":{
-        "local_ip": "192.168.0.29",
+    "dev_9":{
+        "local_ip": "10.1.0.29",
         "local_port": 9001,
-        "local_name": "dev-9",
-        "remote_ip": "192.168.0.13",
+        "local_name": "dev_9",
+        "remote_ip": "10.1.0.13",
         "remote_port": 8282,
-        "remote_name": "gwf-3",
+        "remote_name": "gwf_3",
         "send_period": 3000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/device.js"
     },
-    "app-1":{
-        "remote_ip": "192.168.0.21",
+    "app_1":{
+        "remote_ip": "10.1.0.21",
         "remote_port": 9001,
-        "remote_name": "dev-1",
+        "remote_name": "dev_1",
         "send_period": 5000,
         "file_URL":"https://homepages.laas.fr/smedjiah/tmp/mw/application.js"
     }
