@@ -52,6 +52,7 @@ Hypotèse sur l'infrastuture IT
 
 * Plateforme d’émulation de réseau : [ContainerNet](https://github.com/containernet/containernet)
 * Controlleur SDN : [RYU](https://ryu-sdn.org)
+  * [documentation](https://ryu.readthedocs.io/en/latest/app/ofctl_rest.html)
 * MANO standardisé ETSI NFV : [OSM](https://osm.etsi.org)
 * Middleware IoT/M2M en NodeJS (see [Middelware](https://github.com/TheoFontana/SDCI/tree/main/middleware))
 
