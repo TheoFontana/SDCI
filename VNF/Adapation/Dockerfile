@@ -3,22 +3,21 @@ FROM ubuntu:trusty
 ARG ADD_GWI=10.1.0.10
 ARG PORT_GWI=8181
 ARG NODE_VERSION=14
+ARG INSTANCE_ID=gwi_vnf
 ENV ENV_ADD_GWI=$ADD_GWI
 ENV ENV_PORT_GWI=$PORT_GWI
-
 ENV VIM_EMU_CMD ./start_vnf.sh
 ENV VIM_EMU_CMD_STOP ./stop_vnf.sh
+ENV INSTANCE_ID=$INSTANCE_ID
 
-RUN mkdir /monitor
-WORKDIR /monitor
+RUN mkdir /adaptation
+WORKDIR /adaptation
 
-ADD monitor.js /monitor
-ADD start_vnf.sh /monitor
-ADD stop_vnf.sh /monitor
+ADD start_vnf.sh /adaptation
+ADD stop_vnf.sh /adaptation
 
 RUN chmod +x start_vnf.sh \
     && chmod +x stop_vnf.sh
-    
 RUN apt-get update -y\
     && apt-get upgrade -y\
     && apt-get install curl -y\
@@ -32,5 +31,5 @@ RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
     && npm install yargs\
     && npm install request
 
-EXPOSE 8888
+EXPOSE 8181
 CMD /bin/bash
