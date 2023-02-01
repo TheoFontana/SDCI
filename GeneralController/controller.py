@@ -18,7 +18,6 @@ def start_monitoring():
     url = 'http://127.0.0.1:5001/restapi/compute/dc1/vnf_monitor'
     headers = {'Content-type': 'application/json'}
     d = {"image":"vnf_monitor:0.2", "network":"(id=vnf_monitor,ip=10.1.0.100/24)"}
-    #curl -X PUT http://127.0.0.1:5001/restapi/compute/cvim1/new_vnf -H 'Content-Type: application/json' -d '{"image":"ubuntu:trusty", "network":"(id=input,ip=10.0.0.1/24),(id=output,ip=20.0.0.1/24)"}'
     r = requests.put(url, headers=headers, data = json.dumps(d))
     return r.status_code, r.json()
 
