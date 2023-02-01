@@ -64,15 +64,18 @@ Mettre en place l'adaptation requise lorsque la gateway intermediaire est satur�
 
 Notre groupe avait pour missiion de monitorer la gateway intermediaire pour surveiller sa charges à partir de metrique système tel que la charge du CPU.
 
+![](report/asset/monitoring_strategy.png)
+
 Nous devions en suite en cas de dégradation des performance déployer une nouvelle gateway et redireiger le trafic en provenance de cette zone un 
+![](report/asset/adaptation_stretegy.png)
 
 ## Conception des solutions
 
-![](./report/asset/composition.drawio.png)
+![](./report/asset/composition.png)
 
-![](./report/asset/monitoring_sequence.drawio.png)
+![](./report/asset/monitoring_sequence.png)
 
-![](./report/asset/adaptation_sequence.drawio.png)
+![](./report/asset/adapation_sequence.png)
 
 
 
