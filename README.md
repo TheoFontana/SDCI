@@ -191,4 +191,7 @@ curl -X POST -d '{
 
 ## Axes d'ameliorations
 
+Actuellement nous voyons que suite au déploiment de notre VNF est à la redirection du  
+
+
 ## Conclusion
