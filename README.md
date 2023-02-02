@@ -134,7 +134,7 @@ FILE_URL=`cat conf.json | jq -r '.file_URL'`
 curl -LO $FILE_URL
 node server.js --local_ip $LOCAL_IP --local_port $LOCAL_PORT --local_name $LOCAL_NAME
 ```
-*Exemple de script de demarage pour le serveur [satrt_server.sh](nodes/start_server.sh)*
+*Exemple de script de demarage pour le serveur [start_server.sh](nodes/start_server.sh)*
 ### Metadata serveur
 Nous avons réalisé le metadata serveur en Node.js. Il renvoie la configuartion de l'instance à deployer suite à une requette ```GET``` sur l'identifiant de l'instance souhaité.
 
@@ -249,8 +249,11 @@ Pour notre démonstartion nous souhaitons
 4. Génerer un fort trafic depuis la gateway final 1 vers la gateway intermediaire
 5. Obeserver que le General controller detecte une dégradation des performance sur la gateway et lance une nouvelle gateway intermediaire dans le data center.
 6. Observer que le trafic génerer est redirigé et n'arrive plus à la gateway intermediaire mais à la VNF.
-7. Vérifier que ces opérations ont était transaparantes pour la gatway finale.
+7. Vérifier que ces opérations ont été transaparantes au niveau applicatif.
 ## Axes d'ameliorations
 
+* Actuellement lors de la redirection du trafic le trafic de *retour* entre la VNF gateway intermediaire et la gateway finale est addresé à la gateway intermediare au niveau MAC. Nous n'avons pas pu debuger ce problème qui fait que la GWI reste saturé même après la redirection de trafic effectué.
+* Il nous faudrait ensuite ajouter une stategie pour revenir au cas nominal en suprimant la VNF deployé une fois que le trafic redevient normal.
+* Il pourait également être interessant de monitorer la VNF deployer pour s'assurer que celle ci ne soit pas non plus en surcharge et possiblemnt deployer une nouvelle gateway intermediaire avec un load balancer en cas de problème.
 
 ## Conclusion
