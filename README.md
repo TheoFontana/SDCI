@@ -5,7 +5,7 @@
   <br/>
   <br/>
   <h3 align="center"> Software Defined Communication Infrastructure </h3>
-  <h4 align="center"> Distribued System and Big Data - INSA Toulouse - 2022 </h3>
+  <h4 align="center"> Distribued System and Big Data - INSA Toulouse - 2023 </h3>
   <a href="https://www.github.com/TheoFontana">Théo Fontana</a>
   <span>, </span>
   <a href="https://www.github.com/jodorganistaca">Jose Organista</a>
@@ -14,7 +14,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Presentation du Projet
 
-### Objectifs &
+### Objectifs
 
 * Déployer dynamiquement et de façon transparente des fonctions de réseau virtuelles (VNF) 
   * permettant de répondre aux besoins fonctionnels et/ou non fonctionnels d’applications distribuées relevant d’une activité de l’Internet des objets (IoT)
@@ -66,17 +66,32 @@ Notre groupe avait pour missiion de monitorer la gateway intermediaire pour surv
 
 ![](report/asset/monitoring_strategy.png)
 
-Nous devions en suite en cas de dégradation des performance déployer une nouvelle gateway et redireiger le trafic en provenance de cette zone un 
+Nous devions en suite en cas de dégradation des performance déployer une nouvelle gateway et redireiger le trafic en provenance de la zone 1 vers cette dernière. Le trafic de la zone 2 et 3 continue d'utiliser la gateway initiale.
 ![](report/asset/adaptation_stretegy.png)
 
 ## Conception des solutions
 
+### Composants en jeu
+Nous disponsons d'un Mano qui nous expose un service permettant de déployer et d'arreter des VNF dans un datacenter via des requettes sur son API REST.
+
+Nous avons egalement un controller SDN qui nous permet de mettre à jour les tables SDN des differents switch de notre reéseau via son API REST.
+
+Les iteractions entre notre general controller, le MANO et le SND controller sont resumé dans le diagramme de structure composite suivant
+
 ![](./report/asset/composition.png)
+*Diagramme de structure composite*
+
+### Monitoring
+
+Pour le monitoring nous proposons de déployer la VNF de monitoring au démarage du general controller. Une fois que celui ci à eu la conformation que le VNF est correctement déployé, il l'interooge periodiquement pour recupérer les informations système de la gateway intermediaire. Il verifie à chaque iteration que le système n'est pas en surcharge.
 
 ![](./report/asset/monitoring_sequence.png)
+*Diagramme de séquence du monitoring*
+### Adaptation
+Pour l'adaptation, notre general controller devra demander le deploiment d'une nouvelle gateway dans le datacenter via l'API du MANO. Si ce deploiment s'st bien déroulé, il demande la redirection du trafic de la zone 1 en direction de cette VNF grace à l'API du controller SDN.
 
 ![](./report/asset/adapation_sequence.png)
-
+*Diagramme de séquence de l'adpatation*
 
 
 ## Choix d'implementation
@@ -86,17 +101,46 @@ Nous avons choisi de déployer le reseau suivant
 
 Le reseau bleu est le réseau émulé mininet. Nous avons choisis de simuler les différentes zones avec un switch simulant un LAN. 
 
-Le reseau vert repésente le réseaux VLAN Docker reliant tous nos container. Il est utilisé pour assuré les communication entre : 
-* les instances et le metadata serveur
+Le reseau vert repésente le réseaux VLAN Docker reliant tous nos containers. Il est utilisé pour assurer la communication entre : 
+* les noeuds middelware et le metadata serveur
 * le GC, le Mano, le controlleur SDN et les VNFs 
 
-### Metadata serveur
-Nous avons réalisé le metadata serveur en Node.js . Ce dernier se contente de renvoyer la configuartion de l'instance à deployer suite a une requette GET.
+Pour le deploiment des different noeuds middleware, nous avons créé un unique Dockerfile permetant de créer l'image associée au noeud. 
+Celui ci recupère d'identifiant de l'instance à déployer en variable d'environnement et lance un script de démarrage specifique en fonction du type d'instance lorsque le container est lancé.
 
-extarit de [metadata_server.js](./metadata_server/metadata_server.js)
+```Dockerfile
+FROM ubuntu:trusty
+
+ARG SCRIPT
+ARG NODE_VERSION=14
+ENV INSTANCE_ID=''
+...
+ADD $SCRIPT .
+...
+ENTRYPOINT sh /componnent/$SCRIPT && /bin/sh
+```
+*Extrait du  [Dockerfile](./nodes/Dockerfile)*
+
+Le scrpit de démarage est chargé de récupérer la configuration de l'instance pour pouvoir lancer le service avec les bons paramètres.
+
+```bash
+curl -o conf.json metadata_server/$INSTANCE_ID
+
+LOCAL_NAME=`cat conf.json | jq '.local_name'`
+LOCAL_PORT=`cat conf.json | jq -r '.local_port'`
+LOCAL_IP=`cat conf.json | jq '.local_ip'`
+FILE_URL=`cat conf.json | jq -r '.file_URL'`
+
+curl -LO $FILE_URL
+node server.js --local_ip $LOCAL_IP --local_port $LOCAL_PORT --local_name $LOCAL_NAME
+```
+*Exemple de script de demarage pour le serveur [satrt_server.sh](nodes/start_server.sh)*
+### Metadata serveur
+Nous avons réalisé le metadata serveur en Node.js. Il renvoie la configuartion de l'instance à deployer suite à une requette ```GET``` sur l'identifiant de l'instance souhaité.
+
 ```js
 app.get('/:id', function(req, res) {
-    var id = req.params.id;
+  var id = req.params.id;
     var conf_instance = config[id];
     if (conf_instance)
         res.status(E_OK).send(JSON.stringify(conf_instance));
@@ -104,8 +148,9 @@ app.get('/:id', function(req, res) {
         res.sendStatus(E_NOT_FOUND);
 });
 ```
+*Extarit de [metadata_server.js](./metadata_server/metadata_server.js)*
 
-L'ensemble des configuration est stocké dans un fichier geneneral de configuation [config.json](./metadata_server/config.json)
+L'ensemble des configurations est stocké dans un fichier geneneral de configuation json.
 
 ```json
 {
@@ -122,15 +167,14 @@ L'ensemble des configuration est stocké dans un fichier geneneral de configuati
 ...
 }
 ```
+*Extarit de  [config.json](./metadata_server/config.json)*
 
 ### General controlleur
 
-Nous avons choisi de ne pas utiliser le squelette de general contriller fourni mais de développer un prototype plus simple *from scratch* en Python afain de nous facilité le  developpement et les tests.
-
-Notre general controller lance la VNF de monitoring dans le datacenter au démarrage puis il rentre dans une boucle pour surveiller l'état du système de la gateway intermediaire. En cas ou les metrique surveiller depasse les seuils fixé, il lance le deploiement d'une nouvelle gateway intermediaire n-sous la forme d'une VNF et redirige le trafic de la zone 1 vers cette dernière.
+Nous avons choisi de ne pas utiliser le squelette de general controller fourni mais de développer un prototype plus simple *from scratch* en Python afain de nous faciliter le  developpement et les tests.
 
 ### Monitoring
-Notre startegie de monitoring est pour l'instant assez simple. Lorsqque notre VNF recoit une requette ```GET``` de la part du general controller elle interroge la gateway sur son endpoint ```/health``` et retourne la reponse reçu au GC. Cette stategie nous permet de deplacer le traitement de la réponse au niveau du GC celui si peut donc choisir à quel rythme monitorer la gateway ce qui peut reduire la charge 
+Notre startegie de monitoring est pour l'instant assez simple. Lorsqque notre VNF recoit une requette ```GET``` de la part du general controller elle interroge la gateway sur son endpoint ```/health``` et retourne la reponse reçu au GC. Cette stategie nous permet de déplacer le traitement de la réponse au niveau du GC celui si peut donc choisir à quel rythme monitorer ce qui peut potentiellement reduire la charge sur la gateway.
 ```JS
 app.get('/monitor', function(req, res) {
     request({method: 'GET', uri: `http://10.1.0.10:8181/health`}, (error, response, body) => {
@@ -142,6 +186,7 @@ app.get('/monitor', function(req, res) {
     });
 });
 ```
+*Extarit de  [monitor.js](./VNF/Monitoring/monitor.js)*
 
 Pour deployer la VNF, nous utilsons l'API REST de vim-emu 
 ```Python
@@ -153,48 +198,50 @@ def start_monitoring():
     r = requests.put(url, headers = headers, data = json.dumps(d))
     return r.status_code, r.json()
 ```
+*Extarit de  [controller.py](./GeneralController/controller.py)*
 
-Nous avons chois de basé notre monitoring sur la metrique ```currentLoadSystem``` car c'est elle qui semblait le plus varié rapidement losque nous simulions une charge sur la gateway lors de nos tests. Lorque celle ci depasse le seuil fixé, nous devons deployer notre VNF d'adpatation.
+Nous avons chois de basé notre monitoring sur la metrique ```currentLoadSystem``` car c'est celle qui semblait varier le plus rapidement losque nous simulions une charge sur la gateway durant nos tests. Lorque celle ci depasse le seuil fixé, nous devons deployer notre VNF d'adpatation.
 
-### Adaptation
-La première étape de l'adapation est de deployer une nouvelle gateway intermediaire dans le datacenter en utilisant l'API REST de vim-emu. l'iamge de la gateway intermediaire precedement construit à du être légerement modifier pour qu'elle concovienne au requirement de vim-emu, le serveur node.js doit tourner de background et et les srcipts de démarage et d'arrêt de la VNF doivent être passé en variable d'environnement dans le Dockerfile.
+###  Adaptation
+La première étape de l'adapation est de déployer une nouvelle gateway intermediaire dans le datacenter en utilisant l'API REST de vim-emu. l'image de la gateway intermediaire precedement construite à du être légerement modifié pour qu'elle concovienne aux requirements de vim-emu, le serveur node.js doit tourner de background et et les srcipts de démarage et d'arrêt de la VNF doivent être passé en variable d'environnement dans le Dockerfile.
 
 Nous devons ensuite rediriger le trafic de la gateway final de la zone 1 à direction de la gateway intermidiaire vers notre VNF.
 
-Nous avons pris la decision d'identider ce flux avec uniquement les adresse IP source et destinations. nous devons donc :
+Nous avons pris la décision d'identider ce flux avec uniquement les adresse IP source et destinations. En effet le seul trafic circulant sur notre réseaux entre ces instance est le trafic applicatif que nous souhaions rediriger. Si ce n'était pas le cas nous aurions egalement du utiliser les numéros de port pour identifier ces flux.
+
+Nous devons donc :
 * modifier l'addresse IP destination des paquet provennat de ```GWF_1``` en direction de ```GWI``` *(aller)*
 * modifier d'addresse IP srouce des paquets provennant de la ```GWI_VNF``` en direction en direction de ```GWF_1``` *(retour)*
 
 Cela est réalisé en ajoutant des *flow* dans la table SDN du switch 2 à l'aide de l'API de controller SDN  de la façon suivante (pour l'aller)
 ```Json
 curl -X POST -d '{
-    "dpid": 2,
+  "dpid": 2,
     "table_id":0,
     "priority":11111,
     "match":{
-        "nw_src": "10.1.0.11",
+      "nw_src": "10.1.0.11",
         "nw_dst": "10.1.0.10",
         "dl_type": "2048",
 
     },
     "actions":[
-        {
-            "type": "SET_FIELD",
+      {
+        "type": "SET_FIELD",
             "field": "ipv4_dst",
             "value": "10.1.0.60"
         },
         {
-            "type": "OUTPUT",
+          "type": "OUTPUT",
             "port": "NORMAL"
         }
     ]
  }' http://localhost:8080/stats/flowentry/add
 ```
+*Extarit de  [redirect_gwi_to_vnf.sh](./GeneralController/redirect_gwi_to_vnf.sh)*
 ## Sénario de démonstation 
 
 ## Axes d'ameliorations
-
-Actuellement nous voyons que suite au déploiment de notre VNF est à la redirection du  
 
 
 ## Conclusion
