@@ -241,6 +241,15 @@ curl -X POST -d '{
 *Extarit de  [redirect_gwi_to_vnf.sh](./GeneralController/redirect_gwi_to_vnf.sh)*
 ## Sénario de démonstation 
 
+Pour notre démonstartion nous souhaitons 
+
+1. Lancer notre topologie avec mininet
+2. Tester la communication entre la gateway finale 1 et la gateway intermediaire
+3. Démmarer notre general controller et voir que le monitoring se lance.
+4. Génerer un fort trafic depuis la gateway final 1 vers la gateway intermediaire
+5. Obeserver que le General controller detecte une dégradation des performance sur la gateway et lance une nouvelle gateway intermediaire dans le data center.
+6. Observer que le trafic génerer est redirigé et n'arrive plus à la gateway intermediaire mais à la VNF.
+7. Vérifier que ces opérations ont était transaparantes pour la gatway finale.
 ## Axes d'ameliorations
 
 
