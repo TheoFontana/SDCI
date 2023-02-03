@@ -244,9 +244,9 @@ curl -X POST -d '{
 Pour notre démonstartion nous souhaitons 
 
 1. Lancer notre topologie avec mininet
-   ![](report/asset/mininet.gif)
+   ![](./report/asset/mininet.gif)
 2. Tester la communication entre la gateway finale 1 et la gateway intermediaire
-   ![](report/asset/ping.gif)
+   ![](./report/asset/ping.gif)
 3. Démmarer notre general controller et voir que le monitoring se lance.
    ![](report/asset/controller.gif)
 4. Génerer un fort trafic depuis la gateway final 1 vers la gateway intermediaire
