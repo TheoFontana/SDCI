@@ -244,7 +244,9 @@ curl -X POST -d '{
 Pour notre démonstartion nous souhaitons 
 
 1. Lancer notre topologie avec mininet
+   ![](report/asset/mininet.gif)
 2. Tester la communication entre la gateway finale 1 et la gateway intermediaire
+   ![](report/asset/ping.gif)
 3. Démmarer notre general controller et voir que le monitoring se lance.
 4. Génerer un fort trafic depuis la gateway final 1 vers la gateway intermediaire
 5. Obeserver que le General controller detecte une dégradation des performance sur la gateway et lance une nouvelle gateway intermediaire dans le data center.
@@ -257,3 +259,9 @@ Pour notre démonstartion nous souhaitons
 * Il pourait également être interessant de monitorer la VNF deployer pour s'assurer que celle ci ne soit pas non plus en surcharge et possiblemnt deployer une nouvelle gateway intermediaire avec un load balancer en cas de problème.
 
 ## Conclusion
+
+Ce projet a été l'occasion de nous familiariser avec les concepts de l'autonomus computing dans un contexte IoT où les applications ont des besoin en QoS et génèrent un trafic varibale. 
+
+ Nous avons pu développer et déployer dynamiquemnt des VNFs en charge de surveiller l'état d'instances sur le reseau et d'assurer des performances sufisante aux applications.
+ 
+ Grace à SDN nous avons pu dynamiquement modifier le routage au sein de notre réseaux de manière transpararente pour les applications.
