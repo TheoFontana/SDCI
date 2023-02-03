@@ -248,11 +248,13 @@ Pour notre démonstartion nous souhaitons
 2. Tester la communication entre la gateway finale 1 et la gateway intermediaire
    ![](./report/asset/ping.gif)
 3. Démmarer notre general controller et voir que le monitoring se lance.
-   ![](:wqreport/asset/controller.gif)
+   ![](./report/asset/controller.gif)
 4. Génerer un fort trafic depuis la gateway final 1 vers la gateway intermediaire
 5. Obeserver que le General controller detecte une dégradation des performance sur la gateway et lance une nouvelle gateway intermediaire dans le data center.
 6. Observer que le trafic génerer est redirigé et n'arrive plus à la gateway intermediaire mais à la VNF.
 7. Vérifier que ces opérations ont été transaparantes au niveau applicatif.
+   ![](./report/asset/final_test.gif)
+   *demo pour les points 4,5,6 et 7*
 ## Axes d'ameliorations
 
 * Actuellement lors de la redirection du trafic le trafic de *retour* entre la VNF gateway intermediaire et la gateway finale est addresé à la gateway intermediare au niveau MAC. Nous n'avons pas pu debuger ce problème qui fait que la GWI reste saturé même après la redirection de trafic effectué.
