@@ -268,7 +268,7 @@ Pour notre démonstartion nous souhaitons
 ## Conclusion
 
 Ce projet a été l'occasion de nous familiariser avec les concepts de l'autonomus computing dans un contexte IoT où les applications ont des besoin en QoS et génèrent un trafic varibale. 
+Nous avons pu développer et déployer dynamiquemnt des VNFs en charge de surveiller l'état d'instances sur le reseau et d'assurer des performances sufisante aux applications.
+Grace à SDN nous avons pu dynamiquement modifier le routage au sein de notre réseaux de manière transpararente pour les applications.
 
- Nous avons pu développer et déployer dynamiquemnt des VNFs en charge de surveiller l'état d'instances sur le reseau et d'assurer des performances sufisante aux applications.
- 
- Grace à SDN nous avons pu dynamiquement modifier le routage au sein de notre réseaux de manière transpararente pour les applications.
+Nous aurions cependant aimer pouvoir aprofondir la partie SDN pour pouvoir definir plus finement les flux de communications et aller plus loin dans les strategies mise en oeuvre pour s'adapter a la dégradation de l'état du middleware.
