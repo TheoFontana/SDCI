@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.insa-toulouse.fr/">
-    <img src="./report/asset/logo-insa.png" alt="logo" >
+    <img src="./report/asset/logo-insa.jpg" alt="logo" width="300px" >
   </a>
   <br/>
   <br/>
