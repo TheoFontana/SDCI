@@ -1,6 +1,6 @@
 <div align="center">
-  <a href="https://jodorganistaca/exploratory_analysis_dataviz">
-    <img src="https://www.insa-toulouse.fr/skins/Insa-v2/resources/img/logo-insa.jpg" alt="Logo" >
+  <a href="https://www.insa-toulouse.fr/">
+    <img src="./report/asset/logo-insa.png" alt="logo" >
   </a>
   <br/>
   <br/>
